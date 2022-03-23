@@ -1,0 +1,47 @@
+/* A simple script which tests expressions. */
+
+import "prgmRandom";
+import "prgmMath";
+import "prgmOutput";
+
+func<>(const int[]) sort = func<>(const int[] list)
+{
+    const int[] work;
+    const int l = list.length();
+    for(int i = 1;i < l;i <<= 1)
+    {
+        printOut("i="+i+"\n");
+        for(int j = 0;j < l;j += i << 1)
+        {
+            const int right = minInt(j+i,l),
+                        end = minInt(j+i<<1,l);
+            int a = i,b = right;
+            for(int k = i;k < end;++k)
+                work[k] = list[a < right && (b >= end || list[a] <= list[b])? a++ : b++];
+        }
+        work.swap(list);
+    }
+};
+
+const Random r = randomInstance(true,0);
+const int[] list;
+const int length = 1<<8;
+for(
+    int i = 0;
+    i != length;
+    ++i)
+     list.pushBack(i);
+for(int i = 0;i != length-2;++i)
+{
+    const int j = r.nextI32(i,length);
+    const int t = list[i];
+    list[i] = list[j];
+    list[j] = t;
+}
+
+printOut(""+list+"\n");
+sort(list);
+printOut(""+list+"\n");
+for(int i = 0;i != length;++i)
+    if(list[i] != i)
+        throw "Unsorted list";

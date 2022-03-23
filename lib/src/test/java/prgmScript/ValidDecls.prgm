@@ -1,0 +1,20 @@
+/* A simple test script which contains valid declarations of simple types. */
+
+// Primitive Field Declaration
+bool b; int i; float f; str s,s2;
+
+// Primitive List Field Declaration
+int[] il; float[][] fll;
+
+// Struct Declaration
+struct TestStruct
+{
+    int testField1,
+    str testField2
+}
+
+// Struct Field Declaration
+TestStruct ts; TestStruct[] tsl;
+
+// Primitive Initialization
+bool b2 = true,b3 = false; int i2 = 5; float f = 6.28318530718; str s3 = "reeee";

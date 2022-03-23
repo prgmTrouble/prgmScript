@@ -1,0 +1,28 @@
+/* A test file which simply tests the tokenizer on a valid set of tokens. */
+
+// Types
+void bool int float str func struct
+
+// Identifiers
+simpleID underscore_in_name complex_name$thing_69 fakevoid boolfake Struct
+
+// Control Flow
+import const if else do while for continue break return throw
+
+// Simple Operators
+=()[]{};,.!~?:+-*/%&|^<>
+
+// Complex Operators
+++ -- >> << >>> <= >= && || == != += -= *= /= %= &= |= ^= >>= <<= >>>=
+
+// Adjacent Non-Combining Token
+^^
+
+// Literals
+"string literal \\\"\f\n\r\t\0\1\2\3\4\5\6\7 \u00A7\u00a7"
+true false
+0 0123456 123456789 0x0123456789ABCDEF 0X0123456789abcdef 0b101 0B101
+0. 0.1 .1 0.e+2 0.1e-2 .1e2 1E2
+0x1Ap-1 0X1A.P+1 0x.1Ap1 0x1a.1ap1
+
+/* Allow EOF to terminate block comments

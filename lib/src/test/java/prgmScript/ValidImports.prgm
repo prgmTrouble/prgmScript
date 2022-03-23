@@ -1,0 +1,15 @@
+/* A simple script which tests import statements. */
+
+// Test imports registered using the API.
+{
+    import "prgmMath";
+    if(abs(-1) != 1. || abs(1.) != 1.)
+        throw;
+}
+
+// Test scoped import.
+func<float>(float) abs = func<float>(float x) {return x < 0? -x : x;};
+
+// Test imports from another script.
+import "ScriptModuleTest.prgm";
+if(test(13,56) != 3*23) throw;

@@ -1,0 +1,73 @@
+/* A simple test script which contains valid function declarations, definitions and invocations. */
+
+{
+    // Separate declaration, definition, and invocation.
+    func<>() f0;
+    f0 = func<>() {};
+    f0();
+}
+
+{
+    // Non-void return type and arguments.
+    func<int>(str,int) f1 = func<int>(str s,int i)
+    {
+        return s.length() * i;
+    };
+    str s = "Guess what the meme is!";
+    int i = 3;
+    i = f1(s,i);
+}
+
+{
+    // Anonymous function.
+    int i = 10;
+    int j = func<int>(int k) {return k*42;} (i);
+}
+
+{
+    // Scope capture.
+    func<void>() f3;
+    {
+        bool b1 = true,b2 = false;
+        f3 = func<void>()
+        {
+            if(b1 && !b2) return;
+            throw "bad capture";
+        };
+        b1 = false;
+        b2 = true;
+    }
+    f3();
+}
+
+{
+    // List of functions.
+    func<>()[] f4 =
+    [func<>():
+        func<>() {},
+        func<>() {}
+    ];
+    for(f : f4) f();
+}
+
+{
+    // Function in struct.
+    struct TestStruct
+    {
+        func<>() f5
+    }
+    TestStruct ts = {TestStruct: f5 = func<>() {}};
+    ts.f5();
+}
+
+{
+    // Funct-inception (haha)
+    func<func<func<>()>()>() f6 = func<func<func<>()>()>()
+    {
+        return func<func<>()>()
+        {
+            return func<>() {};
+        };
+    };
+    f6()()();
+}

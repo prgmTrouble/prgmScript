@@ -1,0 +1,25 @@
+/* A simple test script which contains valid literal expressions. */
+
+struct TestStruct1
+{
+    float field1,
+    str field2
+}
+struct TestStruct2
+{
+    TestStruct1 field
+}
+
+true; false; 42069; 69.420; "~ I'm bad at designing languages ~";
+[int: 6,9,4,2,0]; [str[]: [str: "nested","lists"],[str: "lmao"]];
+{TestStruct1:
+    field1 = 6.28318530718,
+    field2 = "tau > pi"
+};
+{TestStruct2:
+    field =
+    {TestStruct1:
+        field1 = 69.420,
+        field2 = "haha funny number"
+    }
+};
