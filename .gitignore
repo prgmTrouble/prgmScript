@@ -3,3 +3,14 @@
 
 # Ignore Gradle build output directory
 build
+
+# Ignore Gradle wrapper
+gradle
+gradlew
+gradlew.bat
+
+# Ignore Intellij files
+.idea
+
+# Ignore todo
+TODO.txt
