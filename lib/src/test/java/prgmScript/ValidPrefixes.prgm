@@ -1,0 +1,38 @@
+/* A simple test script which contains valid prefixes. */
+
+// ++
+{
+    int   i = 1; if(++i != 2 ) throw "Oops: "+i;
+    float f = 1; if(++f != 2.) throw "Oops: "+f;
+}
+
+// --
+{
+    int   i = 1; if(--i != 0 ) throw "Oops: "+i;
+    float f = 1; if(--f != 0.) throw "Oops: "+f;
+}
+
+// +
+{
+    if(+ true != 1) throw "Oops: "+ +true;
+    if(+false != 0) throw "Oops: "+ +false;
+
+    if(+1  != 1 ) throw "Oops: "+ +1;
+    if(+1. != 1.) throw "Oops: "+ +1.;
+}
+
+// -
+{
+    if(- true != -1) throw "Oops: "+-true;
+    if(-false !=  0) throw "Oops: "+-false;
+
+    if(-1  != -1 ) throw "Oops: "+-1;
+    if(-1. != -1.) throw "Oops: "+-1.;
+}
+
+// ~
+{
+    if(~true != ~1) throw "Oops: "+(~true)+" != "+(~1);
+    if(~false != ~0+0.) throw "Oops: "+(~false)+" != "+(~0+0.);
+    if(!~0.) throw "Oops";
+}

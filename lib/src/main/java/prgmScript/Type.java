@@ -1,39 +1,60 @@
 package prgmScript;
 
-import prgmScript.ast.BaseType;
-
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public record Type(boolean isConst,BaseType simple,String customName,Type complex,Type...args)
+/** A record which represents a runtime datatype. */
+@SuppressWarnings("ClassCanBeRecord")
+public final class Type
 {
+    public final BaseType base;
+    public final Type subType;
+    public final String structName;
+    public final ConstableType[] args;
+    
+    Type(final BaseType base,final Type subType,final String structName,final ConstableType...args)
+    {
+        this.base = base;
+        this.subType = subType;
+        this.structName = structName;
+        this.args = args;
+    }
+    
     @Override
     public String toString()
     {
-        return (isConst? "const ":"")+switch(simple)
+        return switch(base)
         {
-            case LIST -> complex + "[]";
-            case STRUCT -> customName;
+            case LIST -> subType + "[]";
+            case STRUCT -> structName;
             case FUNC ->
             {
-                final StringJoiner sj = new StringJoiner(",","func<" + complex + ">(",")");
-                for(final Type ct : args) sj.add(ct.toString());
+                final StringJoiner sj = new StringJoiner(",","func<"+subType+">(",")");
+                for(final ConstableType ct : args) sj.add(ct.toString());
                 yield sj.toString();
             }
-            default -> simple.name().toLowerCase();
+            default -> base.name().toLowerCase();
         };
     }
-    
+    @Override public int hashCode() {return 31 * Objects.hash(base,subType,structName) + Arrays.hashCode(args);}
     @Override
     public boolean equals(final Object o)
     {
         return this == o ||
         (
             o instanceof final Type ct &&
-            simple == ct.simple &&
-            Objects.equals(customName,ct.customName) &&
-            Objects.equals(complex,ct.complex) &&
+            base == ct.base &&
+            Objects.equals(structName,ct.structName) &&
+            Objects.equals(subType,ct.subType) &&
             Objects.deepEquals(args,ct.args)
         );
     }
+    
+    /** A Type object representing a primitive. */
+    static final Type VOID  = new Type(BaseType.VOID ,null,null),
+                      BOOL  = new Type(BaseType.BOOL ,null,null),
+                      INT   = new Type(BaseType.INT  ,null,null),
+                      FLOAT = new Type(BaseType.FLOAT,null,null),
+                      STR   = new Type(BaseType.STR  ,null,null);
 }

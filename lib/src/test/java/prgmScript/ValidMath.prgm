@@ -1,0 +1,330 @@
+/* A simple test script which contains valid math expressions. */
+
+// Order of Operations
+if(153*275+231/33%8-13 != 42069) throw "Oops: "+(153*275+231/33%8-13);
+
+// Comparison Operators
+if(42069 >  69420) throw "Oops: "+(42069 >  69420);
+if(42069 >= 69420) throw "Oops: "+(42069 >= 69420);
+if(69420 <  42069) throw "Oops: "+(69420 <  42069);
+if(69420 <= 42069) throw "Oops: "+(69420 <= 42069);
+if(69420 == 42069) throw "Oops: "+(69420 == 42069);
+if(69420 != 69420) throw "Oops: "+(69420 != 69420);
+
+// Bitwise Operators
+if((39350^15798|39903&24693) != 42069) throw "Oops: "+(39350^15798|39903&24693);
+if(4442880>>6 != 69420) throw "Oops: "+(4442880>>6);
+if(4884998220813434880>>>46 != 69420) throw "Oops: "+(4884998220813434880>>>46);
+if(17355<<2 != 69420) throw "Oops: "+(17355<<2);
+
+// Boolean Operators
+if(!(false || true)) throw "Oops: "+(!(false || true));
+if(false && true || true && false || !(true && true) || false && false) throw "Oops";
+
+// Operator-Specific Tests
+// ==,!=
+{
+    const int i = 1;
+    if(!(i == i) || (i != i)) throw "Oops: "+(!(i == i) || (i != i));
+    const int j;
+    if((i == j) || !(j != i)) throw "Oops: "+((i == j) || !(j != i));
+
+    if((420.69 == 69420) || !(42069 != 69.420)) throw "Oops: "+((420.69 == 69420) || !(42069 != 69.420));
+    if((420.69 == 69.420) || !(420.69 != 69.420)) throw "Oops: "+((420.69 == 69420) || !(42069 != 69.420));
+    if(([bool: true] == [bool: false]) || ([bool: true] != [bool: true])) throw "Oops: "+(([bool: true] == [bool: false]) || ([bool: true] != [bool: true]));
+
+    struct TestStruct {int x}
+    TestStruct a = {TestStruct: x = 1},
+               b = {TestStruct: x = 2},
+               c = {TestStruct: x = 2};
+    if(a == b || b != c) throw "Oops: "+a+" "+b+" "+c;
+}
+// <,>,<=,>=
+{
+    if([int:  ] >  [int: 1] || !([int: 1] >  [int:  ]) ||
+       [int:  ] >= [int: 1] || !([int: 1] >= [int:  ]) ||
+       [int: 1] <  [int:  ] || !([int:  ] <  [int: 1]) ||
+       [int: 1] <= [int:  ] || !([int:  ] <= [int: 1]))
+        throw "Oops";
+
+    if("abc" >  "xyz" || !("xyz" >  "abc") ||
+       "abc" >= "xyz" || !("xyz" >= "abc") ||
+       "xyz" <  "abc" || !("abc" <  "xyz") ||
+       "xyz" <= "abc" || !("abc" <= "xyz"))
+        throw "Oops";
+
+    if(false >  true  || !(true  >  false) ||   true >  true  ||   false >  false  ||
+       false >= true  || !(true  >= false) || !(true >= true) || !(false >= false) ||
+       true  <  false || !(false <   true) ||   true <  true  ||   false <  false  ||
+       true  <= false || !(false <=  true) || !(true <= true) || !(false <= false))
+        throw "Oops";
+    if(false >  1 || !(1 >  false) ||
+       false >= 1 || !(1 >= false) ||
+       true  <  0 || !(0 <  true ) ||
+       true  <= 0 || !(0 <= true ))
+        throw "Oops";
+    if(false >  1. || !(1. >  false) ||
+       false >= 1. || !(1. >= false) ||
+       true  <  0. || !(0. <  true ) ||
+       true  <= 0. || !(0. <= true ))
+        throw "Oops";
+
+    if(0 >  true  || !(true  >  0) ||
+       0 >= true  || !(true  >= 0) ||
+       1 <  false || !(false <  1) ||
+       1 <= false || !(false <= 1))
+        throw "Oops";
+    if(0 >  1 || !(1 >  0) ||
+       0 >= 1 || !(1 >= 0) ||
+       1 <  0 || !(0 <  1) ||
+       1 <= 0 || !(0 <= 1))
+        throw "Oops";
+    if(0 >  1. || !(1. >  0) ||
+       0 >= 1. || !(1. >= 0) ||
+       1 <  0. || !(0. <  1) ||
+       1 <= 0. || !(0. <= 1))
+        throw "Oops";
+
+    if(0. >  true  || !(true  >  0.) ||
+       0. >= true  || !(true  >= 0.) ||
+       1. <  false || !(false <  1.) ||
+       1. <= false || !(false <= 1.))
+        throw "Oops";
+    if(0. >  1 || !(1 >  0.) ||
+       0. >= 1 || !(1 >= 0.) ||
+       1. <  0 || !(0 <  1.) ||
+       1. <= 0 || !(0 <= 1.))
+        throw "Oops";
+    if(0. >  1. || !(1. >  0.) ||
+       0. >= 1. || !(1. >= 0.) ||
+       1. <  0. || !(0. <  1.) ||
+       1. <= 0. || !(0. <= 1.))
+        throw "Oops";
+}
+// +
+{
+    if("abc" + "xyz" != "abcxyz") throw "Oops: "+("abc"+"xyz");
+    if("abc" + 123 != "abc123") throw "Oops: "+("abc"+123);
+    if(123 + "abc" != "123abc") throw "Oops: "+(123+"abc");
+
+    if(true  + true  != 2 ) throw "Oops: "+(true +true );
+    if(false + false != 0 ) throw "Oops: "+(false+false);
+    if(true  + 1     != 2 ) throw "Oops: "+(true +1    );
+    if(false + 1     != 1 ) throw "Oops: "+(false+1    );
+    if(true  + 1.    != 2.) throw "Oops: "+(true +1.   );
+    if(false + 1.    != 1.) throw "Oops: "+(false+1.   );
+
+    if(1    + true  != 2 ) throw "Oops: "+(1   +true );
+    if(1    + false != 1 ) throw "Oops: "+(1   +false);
+    if(1    + 1     != 2 ) throw "Oops: "+(1   +1    );
+    if(1    + 1.    != 2.) throw "Oops: "+(1   +1.   );
+
+    if(1.   + true  != 2.) throw "Oops: "+(1.  +true );
+    if(1.   + false != 1.) throw "Oops: "+(1.  +false);
+    if(1.   + 1     != 2.) throw "Oops: "+(1.  +1    );
+    if(1.   + 1.    != 2.) throw "Oops: "+(1.  +1.   );
+
+    if([bool: true] + [bool: false] != [bool: true,false]) throw "Oops: "+([bool: true] + [bool: false] != [bool: true,false]);
+}
+// -
+{
+    if(true  - true  != 0 ) throw "Oops: "+(true -true );
+    if(false - false != 0 ) throw "Oops: "+(false-false);
+    if(true  - 1     != 0 ) throw "Oops: "+(true -1    );
+    if(false - 0     != 0 ) throw "Oops: "+(false-0    );
+    if(true  - 1.    != 0.) throw "Oops: "+(true -1.   );
+    if(false - 0.    != 0.) throw "Oops: "+(false-0.   );
+
+    if(1    - true  != 0 ) throw "Oops: "+(1   -true );
+    if(1    - false != 1 ) throw "Oops: "+(1   -false);
+    if(1    - 1     != 0 ) throw "Oops: "+(1   -1    );
+    if(1    - 1.    != 0.) throw "Oops: "+(1   -1.   );
+
+    if(1.   - true  != 0.) throw "Oops: "+(1.  -true );
+    if(1.   - false != 1.) throw "Oops: "+(1.  -false);
+    if(1.   - 1     != 0.) throw "Oops: "+(1.  -1    );
+    if(1.   - 1.    != 0.) throw "Oops: "+(1.  -1.   );
+}
+// *
+{
+    if(true  * true  != 1 ) throw "Oops: "+(true *true );
+    if(true  * false != 0 ) throw "Oops: "+(true *false);
+    if(false * true  != 0 ) throw "Oops: "+(false*true );
+    if(false * false != 0 ) throw "Oops: "+(false*false);
+    if(true  * 1     != 1 ) throw "Oops: "+(true *1    );
+    if(false * 1     != 0 ) throw "Oops: "+(false*1    );
+    if(true  * 1.    != 1.) throw "Oops: "+(true *1.   );
+    if(false * 1.    != 0.) throw "Oops: "+(false*1.   );
+
+    if(1    * true  != 1 ) throw "Oops: "+(1   *true );
+    if(1    * false != 0 ) throw "Oops: "+(1   *false);
+    if(1    * 1     != 1 ) throw "Oops: "+(1   *1    );
+    if(1    * 1.    != 1.) throw "Oops: "+(1   *1.   );
+
+    if(1.   * true  != 1.) throw "Oops: "+(1.  *true );
+    if(1.   * false != 0.) throw "Oops: "+(1.  *false);
+    if(1.   * 1     != 1.) throw "Oops: "+(1.  *1    );
+    if(1.   * 1.    != 1.) throw "Oops: "+(1.  *1.   );
+}
+// /
+{
+    if(true  / true != 1 ) throw "Oops: "+(true /true);
+    if(false / true != 0 ) throw "Oops: "+(false/true);
+    if(true  / 1    != 1 ) throw "Oops: "+(true /1   );
+    if(false / 1    != 0 ) throw "Oops: "+(false/1   );
+    if(true  / 1.   != 1.) throw "Oops: "+(true /1.  );
+    if(false / 1.   != 0.) throw "Oops: "+(false/1.  );
+
+    if(1    / true != 1 ) throw "Oops: "+(1   /true);
+    if(1    / 1    != 1 ) throw "Oops: "+(1   /1   );
+    if(1    / 1.   != 1.) throw "Oops: "+(1   /1.  );
+
+    if(1.   / true != 1.) throw "Oops: "+(1.  /true);
+    if(1.   / 1    != 1.) throw "Oops: "+(1.  /1   );
+    if(1.   / 1.   != 1.) throw "Oops: "+(1.  /1.  );
+}
+// %
+{
+    if(true  % true  != 0 ) throw "Oops: "+(true %true );
+    if(false % false != 0 ) throw "Oops: "+(false%false);
+    if(true  % 1     != 0 ) throw "Oops: "+(true %1    );
+    if(false % 1     != 0 ) throw "Oops: "+(false%1    );
+    if(true  % 1.    != 0.) throw "Oops: "+(true %1.   );
+    if(false % 1.    != 0.) throw "Oops: "+(false%1.   );
+
+    if(1    % true  != 0 ) throw "Oops: "+(1   %true );
+    if(1    % false != 0 ) throw "Oops: "+(1   %false);
+    if(1    % 1     != 0 ) throw "Oops: "+(1   %1    );
+    if(1    % 1.    != 0.) throw "Oops: "+(1   %1.   );
+
+    if(1.   % true     != 0.) throw "Oops: "+(1.  %true );
+    if((1.  % false)&0 != 0 ) throw "Oops: "+((1. %false)&0);
+    if(1.   % 1        != 0.) throw "Oops: "+(1.  %1    );
+    if(1.   % 1.       != 0.) throw "Oops: "+(1.  %1.   );
+}
+// &
+{
+    if((true  & true ) != 1 ) throw "Oops: "+(true &true );
+    if((true  & false) != 0 ) throw "Oops: "+(true &false);
+    if((false & true ) != 0 ) throw "Oops: "+(false&true );
+    if((false & false) != 0 ) throw "Oops: "+(false&false);
+    if((true  & 0    ) != 0 ) throw "Oops: "+(true &0    );
+    if((false & 0    ) != 0 ) throw "Oops: "+(false&0    );
+    if((true  & 0.   ) != 0.) throw "Oops: "+(true &0.   );
+    if((false & 0.   ) != 0.) throw "Oops: "+(false&0.   );
+
+    if((0     & true ) != 0 ) throw "Oops: "+(0    &true );
+    if((0     & false) != 0 ) throw "Oops: "+(0    &false);
+    if((0     & 0    ) != 0 ) throw "Oops: "+(0    &0    );
+    if((0     & 0.   ) != 0.) throw "Oops: "+(0    &0.   );
+
+    if((0.    & true ) != 0.) throw "Oops: "+(0.   &true );
+    if((0.    & false) != 0.) throw "Oops: "+(0.   &false);
+    if((0.    & 0    ) != 0.) throw "Oops: "+(0.   &0    );
+    if((0.    & 0.   ) != 0.) throw "Oops: "+(0.   &0.   );
+}
+// |
+{
+    if((true  | true )  != 1 ) throw "Oops: "+(true |true );
+    if((true  | false)  != 1 ) throw "Oops: "+(true |false);
+    if((false | true )  != 1 ) throw "Oops: "+(false|true );
+    if((false | false)  != 0 ) throw "Oops: "+(false|false);
+    if((true  | 0    )  != 1 ) throw "Oops: "+(true |0    );
+    if((false | 0    )  != 0 ) throw "Oops: "+(false|0    );
+    if(((true | 0.)&0.) != 0.) throw "Oops: "+((true| 0.)&0.);
+    if((false | 0.   )  != 0.) throw "Oops: "+(false|0.   );
+
+    if((0     | true ) != 1 ) throw "Oops: "+(0    |true );
+    if((0     | false) != 0 ) throw "Oops: "+(0    |false);
+    if((0     | 0    ) != 0 ) throw "Oops: "+(0    |0    );
+    if((0     | 0.   ) != 0.) throw "Oops: "+(0    |0.   );
+
+    if((0.    | false)     != 0.) throw "Oops: "+(0.|false);
+    if(((0.   | true )&0.) != 0.) throw "Oops: "+((0.|true)&0.);
+    if((0.    | 0    )     != 0.) throw "Oops: "+(0.|0    );
+    if((0.    | 0.   )     != 0.) throw "Oops: "+(0.|0.   );
+}
+// ^
+{
+    if((true  ^ true )  != 0 ) throw "Oops: "+(true ^true );
+    if((true  ^ false)  != 1 ) throw "Oops: "+(true ^false);
+    if((false ^ true )  != 1 ) throw "Oops: "+(false^true );
+    if((false ^ false)  != 0 ) throw "Oops: "+(false^false);
+    if((true  ^ 1    )  != 0 ) throw "Oops: "+(true ^1    );
+    if((false ^ 0    )  != 0 ) throw "Oops: "+(false^0    );
+    if(((true ^ 0.)&0.) != 0.) throw "Oops: "+((true^0.   )&0.);
+    if((false ^ 0.   )  != 0.) throw "Oops: "+(false^0.   );
+
+    if((1     ^ true ) != 0 ) throw "Oops: "+(1    ^true );
+    if((0     ^ false) != 0 ) throw "Oops: "+(0    ^false);
+    if((0     ^ 0    ) != 0 ) throw "Oops: "+(0    ^0    );
+    if((0     ^ 0.   ) != 0.) throw "Oops: "+(0    ^0.   );
+
+    if(((0.   ^ true)&0.) != 0.) throw "Oops: "+((0.  ^true)&0.);
+    if((0.    ^ false)    != 0.) throw "Oops: "+(0.   ^false);
+    if((0.    ^ 0    )    != 0.) throw "Oops: "+(0.   ^0    );
+    if((0.    ^ 0.   )    != 0.) throw "Oops: "+(0.   ^0.   );
+}
+// <<
+{
+    if(true  << true  != 2 ) throw "Oops: "+(true <<true );
+    if(true  << false != 1 ) throw "Oops: "+(true <<false);
+    if(false << true  != 0 ) throw "Oops: "+(false<<true );
+    if(false << false != 0 ) throw "Oops: "+(false<<false);
+    if(true  << 0     != 1 ) throw "Oops: "+(true <<0    );
+    if(false << 0     != 0 ) throw "Oops: "+(false<<0    );
+    if(true  << 0.    != 1.) throw "Oops: "+(true <<0.   );
+    if(false << 0.    != 0.) throw "Oops: "+(false<<0.   );
+
+    if(0     << true  != 0 ) throw "Oops: "+(0    <<true );
+    if(0     << false != 0 ) throw "Oops: "+(0    <<false);
+    if(0     << 0     != 0 ) throw "Oops: "+(0    <<0    );
+    if(0     << 0.    != 0.) throw "Oops: "+(0    <<0.   );
+
+    if(0.    << true  != 0.) throw "Oops: "+(0.   <<true );
+    if(0.    << false != 0.) throw "Oops: "+(0.   <<false);
+    if(0.    << 0     != 0.) throw "Oops: "+(0.   <<0    );
+    if(0.    << 0.    != 0.) throw "Oops: "+(0.   <<0.   );
+}
+// >>
+{
+    if(true  >> true  != 0 ) throw "Oops: "+(true >>true );
+    if(true  >> false != 1 ) throw "Oops: "+(true >>false);
+    if(false >> true  != 0 ) throw "Oops: "+(false>>true );
+    if(false >> false != 0 ) throw "Oops: "+(false>>false);
+    if(true  >> 0     != 1 ) throw "Oops: "+(true >>0    );
+    if(false >> 0     != 0 ) throw "Oops: "+(false>>0    );
+    if(true  >> 0.    != 1.) throw "Oops: "+(true >>0.   );
+    if(false >> 0.    != 0.) throw "Oops: "+(false>>0.   );
+
+    if(0     >> true  != 0 ) throw "Oops: "+(0    >>true );
+    if(0     >> false != 0 ) throw "Oops: "+(0    >>false);
+    if(0     >> 0     != 0 ) throw "Oops: "+(0    >>0    );
+    if(0     >> 0.    != 0.) throw "Oops: "+(0    >>0.   );
+
+    if(0.    >> true  != 0.) throw "Oops: "+(0.   >>true );
+    if(0.    >> false != 0.) throw "Oops: "+(0.   >>false);
+    if(0.    >> 0     != 0.) throw "Oops: "+(0.   >>0    );
+    if(0.    >> 0.    != 0.) throw "Oops: "+(0.   >>0.   );
+}
+// >>>
+{
+    if(true  >>> true  != 0 ) throw "Oops: "+(true >>>true );
+    if(true  >>> false != 1 ) throw "Oops: "+(true >>>false);
+    if(false >>> true  != 0 ) throw "Oops: "+(false>>>true );
+    if(false >>> false != 0 ) throw "Oops: "+(false>>>false);
+    if(true  >>> 0     != 1 ) throw "Oops: "+(true >>>0    );
+    if(false >>> 0     != 0 ) throw "Oops: "+(false>>>0    );
+    if(true  >>> 0.    != 1.) throw "Oops: "+(true >>>0.   );
+    if(false >>> 0.    != 0.) throw "Oops: "+(false>>>0.   );
+
+    if(0     >>> false != 0 ) throw "Oops: "+(0    >>>false);
+    if(0     >>> true  != 0 ) throw "Oops: "+(0    >>>true );
+    if(0     >>> 0     != 0 ) throw "Oops: "+(0    >>>0    );
+    if(0     >>> 0.    != 0.) throw "Oops: "+(0    >>>0.   );
+
+    if(0.    >>> false != 0.) throw "Oops: "+(0.   >>>false);
+    if(0.    >>> true  != 0.) throw "Oops: "+(0.   >>>true );
+    if(0.    >>> 0     != 0.) throw "Oops: "+(0.   >>>0    );
+    if(0.    >>> 0.    != 0.) throw "Oops: "+(0.   >>>0.   );
+}

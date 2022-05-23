@@ -1,0 +1,44 @@
+/* A simple test script which contains valid type conversions. */
+
+// bool
+{
+    bool  a = true;
+    int   b = true;
+    float c = true;
+    str   d = true;
+}
+
+// int
+{
+    bool  a = 1;
+    int   b = 1;
+    float c = 1;
+    str   d = 1;
+}
+
+// float
+{
+    bool  a = 1.;
+    int   b = 1.;
+    float c = 1.;
+    str   d = 1.;
+}
+
+// str
+{
+    bool a = "";
+    str  b = "";
+}
+
+// list
+{
+    bool a = [bool: true];
+    str  b = [bool: true];
+    bool[][] c = [int[]: [int: 1]];
+}
+
+// struct
+{
+    struct TestStruct {}
+    TestStruct test = {TestStruct:};
+}

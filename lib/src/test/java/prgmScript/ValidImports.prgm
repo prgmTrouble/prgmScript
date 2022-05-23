@@ -3,8 +3,8 @@
 // Test imports registered using the API.
 {
     import "prgmMath";
-    if(abs(-1) != 1. || abs(1.) != 1.)
-        throw;
+    if(absInt(-1) != 1 || abs(1.) != 1.)
+        throw "Oops: "+absInt(-1)+" "+abs(1.);
 }
 
 // Test scoped import.
@@ -12,4 +12,12 @@ func<float>(float) abs = func<float>(float x) {return x < 0? -x : x;};
 
 // Test imports from another script.
 import "ScriptModuleTest.prgm";
-if(test(13,56) != 3*23) throw;
+if(test(13,56) != 3*23) throw "Oops";
+
+// Already loaded imports.
+{
+    import "ScriptModuleTest.prgm";
+
+    if(test(13,56) != 3*23) throw "Oops";
+}
+func<int>(int,int) ree = test;

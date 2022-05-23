@@ -3,6 +3,7 @@ package prgmScript.util;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+/** A wrapper for a {@linkplain java.io.Reader} which allows read characters to be "unread". */
 public class Reader implements AutoCloseable
 {
     private final BufferedReader r;
@@ -10,9 +11,10 @@ public class Reader implements AutoCloseable
     private int line = 0;
     
     public Reader(final java.io.Reader reader) {r = new BufferedReader(reader);}
-    
+    /** @return The number of newline ('\n') characters read. */
     public int line() {return line;}
     
+    /** @return The code point of the next character. */
     public int read() throws IOException
     {
         final int o;
@@ -25,11 +27,17 @@ public class Reader implements AutoCloseable
         if(o == '\n') ++line;
         return o;
     }
+    /** Puts the specified code point back into the reader. */
     public void unread(final int c)
     {
         if(c == '\n') --line;
         stk.push(c);
     }
+    /**
+     * Skips all characters which satisfy {@linkplain Character#isWhitespace(char)}.
+     *
+     * @return The first non-whitespace character encountered.
+     */
     public int skipWS() throws IOException
     {
         int c;

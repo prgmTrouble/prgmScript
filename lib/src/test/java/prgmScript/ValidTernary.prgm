@@ -1,0 +1,7 @@
+/* A simple test script which contains valid ternary conditional expressions. */
+
+if(true? false : true) throw "Oops";
+
+int i = 0,j = 0;
+++(true? i:j);
+if(i != 1 || j != 0) throw "Oops: "+i+","+j;

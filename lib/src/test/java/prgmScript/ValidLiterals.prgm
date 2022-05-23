@@ -10,8 +10,28 @@ struct TestStruct2
     TestStruct1 field
 }
 
-true; false; 42069; 69.420; "~ I'm bad at designing languages ~";
-[int: 6,9,4,2,0]; [str[]: [str: "nested","lists"],[str: "lmao"]];
+true;
+false;
+
+42069;
+0x5;
+0X5;
+0b101;
+0B101;
+
+69.420;
+.69;
+420.;
+420e69;
+.69e420;
+0x1.15ae147ae147bp6;
+0X1.15AE147AE147BP6;
+
+"~ I'm bad at designing languages ~";
+
+[int: 6,9,4,2,0];
+[str[]: [str: "nested","lists"],[str: "lmao"]];
+
 {TestStruct1:
     field1 = 6.28318530718,
     field2 = "tau > pi"
