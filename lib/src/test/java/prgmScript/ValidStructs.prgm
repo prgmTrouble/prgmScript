@@ -1,0 +1,32 @@
+/* A simple test script which contains valid uses for structs. */
+
+// Declaration
+struct EmptyStruct {}
+struct TestStruct1 {int field,func<>() f}
+
+// Instantiation
+EmptyStruct test = {EmptyStruct:};
+TestStruct1 test1 = {TestStruct1: field = 69,f = func<>() {}};
+
+// Field Access
+if(test1.field != 69)
+   throw "Oops: "+test1.field;
+
+// Boolean Conversion
+if(!test1)
+    throw "Oops: "+!test1;
+
+// Nested Declaration
+struct TestStruct2 {TestStruct1 field}
+struct TestStruct3 {TestStruct2 field}
+
+// Nested Instantiation
+TestStruct3 test2 = {TestStruct3: field = {TestStruct2: field = test1}};
+
+// Nested Field Access
+if(test2.field.field.field != 69)
+    throw "Oops: "+test2.field.field.field;
+
+// Nested Boolean Conversion
+if(!test2)
+    throw "Oops: "+!test2;

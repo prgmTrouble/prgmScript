@@ -1,0 +1,21 @@
+/* A simple script which tests valid behaviors for void lists. */
+
+// Declaration
+void[] test;
+
+// Assignment
+test = [bool: true];
+if(test.length() != 1) throw "Oops: "+test+" ("+test.length()+")";
+
+// Multidimensional Declaration & assignment
+void[][] test2 = [int[]: [int: 0,1,2],[int:]];
+if(test2.length() != 2 || test2[0].length() != 3) throw "Oops: "+test2+" ("+test2.length()+","+test2[0].length()+")";
+
+// Dimension Reduction
+test = test2;
+if(test.length() != 2) throw "Oops: "+test+" ("+test.length()+")";
+
+// Function Argument & Return Type
+func<void[]>(const void[][]) test3 = func<void[]>(const void[][] arg) {return arg[0];};
+const void[] test4 = test3([int[]: [int: 1,2,3],[int:]]);
+if(test4.length() != 3) throw "Oops: "+test4+" ("+test4.length()+")";

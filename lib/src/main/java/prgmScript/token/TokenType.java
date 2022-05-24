@@ -1,8 +1,11 @@
 package prgmScript.token;
 
+import prgmScript.util.ContainerUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
+/** An enumeration of different types of tokens. */
 public enum TokenType
 {
     EOF,ERR,
@@ -84,16 +87,15 @@ public enum TokenType
             default -> name;
         };
     }
-    public boolean isKeyword()
-    {
-        return name != null && ordinal() <= FALSE.ordinal() && ordinal() >= IMPORT.ordinal();
-    }
+    /** @return {@code true} if this token represents a keyword. */
+    public boolean isKeyword() {return name != null && ordinal() <= FALSE.ordinal() && ordinal() >= IMPORT.ordinal();}
     
+    /** A map containing all keywords. */
     public static final Map<String,TokenType> Keywords;
     static
     {
-        final HashMap<String,TokenType> m = new HashMap<>(values().length - 5);
+        final Map<String,TokenType> m = new HashMap<>(values().length - 5);
         for(final TokenType t : values()) if(t.isKeyword()) m.put(t.name,t);
-        Keywords = Map.copyOf(m);
+        Keywords = ContainerUtil.makeImmutable(m);
     }
 }

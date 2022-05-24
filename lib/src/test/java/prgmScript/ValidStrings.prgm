@@ -1,0 +1,7 @@
+/* A simple test script which contains valid string expressions. */
+
+// length
+if("test".length() != 4) throw "Oops: "+"test".length();
+
+// substring
+if("test".substring(0,2) != "te") throw "Oops: "+"test".substring(0,3);

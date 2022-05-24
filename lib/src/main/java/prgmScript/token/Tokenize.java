@@ -10,6 +10,45 @@ import java.util.ArrayList;
 import static prgmScript.token.Token.DUMMY;
 import static prgmScript.token.TokenType.*;
 
+/**
+ * This class contains functions which convert text into prgmScript tokens.
+ * <br>
+ * Tokens:
+ * <pre>
+ *     LiteralBool := ('true'|'false')
+ *      LiteralNum := (Integer|Float)
+ *      LiteralStr := '"' {StrChr} '"'
+ *            Name := NameChr {NameChr}
+ *
+ *         Integer := '0'('x'|'X') HexDigits
+ *                  | '0'('b'|'B') BinDigits
+ *                  | DecDigits
+ *           Float := HexSig [HexExp]
+ *                  | DecSig [DecExp]
+ *
+ *       BinDigits := Bin {Bin}
+ *       HexDigits := Hex {Hex}
+ *       DecDigits := Dec {Dec}
+ *             Bin := ('0'|'1')
+ *             Dec := (Bin|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9')
+ *             Hex := (Dec|'A'|'B'|'C'|'D'|'E'|'F'|'a'|'b'|'c'|'d'|'e'|'f')
+ *          HexSig := '0'('x'|'X')(['.']|([HexDigits] '.' HexDigits))
+ *          DecSig := DecDigits ['.'] {Dec}
+ *                  | {Dec} '.' DecDigits
+ *          HexExp := ('p'|'P')['+'|'-'] DecDigits
+ *          DecExp := ('e'|'E')['+'|'-'] DecDigits
+ *
+ *          StrChr := (Escape|NotQuoteOrEsc)
+ *          Escape := '\'(('u' Hex Hex Hex Hex)|'f'|'n'|'r'|'t'|'0'|'1'|'2'|'3'|'4'|'5'|'6'|'7')
+ *   NotQuoteOrEsc := any unicode character except 'CR', 'LF', '"', or '\'
+ *
+ *         NameChr := 'a'|'b'|'c'|'d'|'e'|'f'|'g'|'h'|'i'|'j'|'k'|'l'|'m'|'n'|'o'|'p'|'q'|'r'|'s'|'t'|'u'|'v'|'w'|'x'|'y'|'z'
+ *                  | 'A'|'B'|'C'|'D'|'E'|'F'|'G'|'H'|'I'|'J'|'K'|'L'|'M'|'N'|'O'|'P'|'Q'|'R'|'S'|'T'|'U'|'V'|'W'|'X'|'Y'|'Z'
+ *                  | '0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'|'$'|'_'
+ * </pre>
+ *
+ * @see prgmScript.Script
+ */
 public final class Tokenize
 {
     private static String word(final Reader r,int first) throws IOException
@@ -125,42 +164,56 @@ public final class Tokenize
             sb.append(Character.toString(c));
             c = integer(r,b,sb);
         }
-        if(b == Base.hex && c == '.')
+        switch(b)
         {
-            final String s = hexFrac(r,reporter,hasDigit);
-            if(s == null) return null;
-            sb.append(Character.toString(c))
-              .append(s);
-            tt = LIT_FLOAT;
-        }
-        else if(b == Base.hex && hasDigit && (c == 'p' || c == 'P'))
-        {
-            final String s = hexExp(r,reporter,c);
-            if(s == null) return null;
-            sb.append(s);
-            tt = LIT_FLOAT;
-        }
-        else if(b == Base.dec && c == '.')
-        {
-            sb.append('.');
-            final String f = frac(r,reporter);
-            if(f == null) return null;
-            sb.append(f);
-            tt = LIT_FLOAT;
-        }
-        else if(b == Base.dec && (c == 'e' || c == 'E'))
-        {
-            r.unread(c);
-            final String f = frac(r,reporter);
-            if(f == null) return null;
-            sb.append(f);
-            tt = LIT_FLOAT;
-        }
-        else if(b == Base.dec) r.unread(c);
-        else if(!hasDigit)
-        {
-            reporter.report(r.line(),"Missing digits while parsing number");
-            return null;
+            case hex ->
+            {
+                if(c == '.')
+                {
+                    final String s = hexFrac(r,reporter,hasDigit);
+                    if(s == null) return null;
+                    sb.append('.')
+                      .append(s);
+                    tt = LIT_FLOAT;
+                }
+                else if(hasDigit && (c == 'p' || c == 'P'))
+                {
+                    final String s = hexExp(r,reporter,c);
+                    if(s == null) return null;
+                    sb.append(s);
+                    tt = LIT_FLOAT;
+                }
+                else r.unread(c);
+            }
+            case dec ->
+            {
+                if(c == '.')
+                {
+                    final String f = frac(r,reporter);
+                    if(f == null) return null;
+                    sb.append('.')
+                      .append(f);
+                    tt = LIT_FLOAT;
+                }
+                else if(c == 'e' || c == 'E')
+                {
+                    r.unread(c);
+                    final String f = frac(r,reporter);
+                    if(f == null) return null;
+                    sb.append(f);
+                    tt = LIT_FLOAT;
+                }
+                else r.unread(c);
+            }
+            default ->
+            {
+                if(!hasDigit)
+                {
+                    reporter.report(r.line(),"Missing digits while parsing number");
+                    return null;
+                }
+                r.unread(c);
+            }
         }
         return new Token(tt,-1,sb.toString());
     }
@@ -221,7 +274,15 @@ public final class Tokenize
                     case '5' -> '\5';
                     case '6' -> '\6';
                     case '7' -> '\7';
-                    default  -> c;
+                    default  ->
+                    {
+                        reporter.report
+                        (
+                            r.line(),
+                            "Invalid escape sequence: '\\"+Character.toString(c)+"'"
+                        );
+                        yield c;
+                    }
                 };
                 if(esc == -1) break;
                 sb.append(Character.toString(esc));
@@ -313,7 +374,6 @@ public final class Tokenize
             case '1','2','3','4','5',
                  '6','7','8','9' ->
             {
-                
                 final Token t = number(r,reporter,Base.dec);
                 if(t == null) yield null;
                 text = Character.toString(c)+t.value();

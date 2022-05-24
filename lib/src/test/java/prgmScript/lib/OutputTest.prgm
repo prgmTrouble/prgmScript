@@ -1,0 +1,8 @@
+/* A test script which tests the functions from the library prgmOutput. */
+
+import "prgmOutput";
+
+sysout.print("ree1");
+sysout.println("ree2");
+syserr.print("ree3");
+syserr.println("ree4");

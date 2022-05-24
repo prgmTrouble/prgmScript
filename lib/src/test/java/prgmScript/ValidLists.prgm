@@ -1,0 +1,30 @@
+/* A simple test script which contains valid list expressions. */
+
+// List Access
+bool[][] test = [bool[]: [bool: true],[bool: false]];
+if(test[0] != [bool: true] || test[1][0]) throw "Oops";
+
+// length
+if(test.length() != 2) throw "Oops: "+test.length();
+
+// front,back
+if(test.front() != [bool: true] || test.back() != [bool: false])
+    throw "Oops: "+test.front()+" "+test.back();
+
+// pushFront,pushBack
+test.pushFront([bool: false]);
+test.pushBack([bool: true]);
+if(test[0] != [bool: false] || test[3] != [bool: true])
+    throw "Oops: "+test;
+
+// popFront,popBack
+if(test.popFront() != [bool: false] || test.popBack() != [bool: true] ||
+   test != [bool[]: [bool: true],[bool: false]])
+    throw "Oops: "+test;
+
+
+// insert,remove
+test.insert(1,[bool: false,true]);
+if(!test[1].remove(1)) throw "Oops";
+if(test != [bool[]: [bool: true],[bool: false],[bool: false]])
+    throw "Oops: "+test;

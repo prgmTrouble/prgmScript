@@ -1,0 +1,25 @@
+/* A simple test script which contains valid suffixes. */
+
+// ++
+{
+    int   i = 1; if(i++ != 1  && i != 2 ) throw "Oops: "+i;
+    float f = 1; if(f++ != 1. && f != 2.) throw "Oops: "+f;
+}
+
+// --
+{
+    int   i = 1; if(i-- != 1  && i != 0 ) throw "Oops: "+i;
+    float f = 1; if(f-- != 1. && f != 0.) throw "Oops: "+f;
+}
+
+// [
+{
+    bool[] b = [bool: true];
+    if(!b[0]) throw "Oops: "+b[0];
+}
+
+// (
+{
+    func<>() f = func<>() {};
+    f();
+}

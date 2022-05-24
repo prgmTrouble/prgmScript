@@ -1,0 +1,47 @@
+/* A test script which tests the functions from the library prgmMath. */
+
+import "prgmMath";
+
+const float _abs = abs(.5);
+const float _acos = acos(.5);
+const float _asin = asin(.5);
+const float _atan = atan(.5);
+const float _cbrt = cbrt(.5);
+const float _ceil = ceil(.5);
+const float _cos = cos(.5);
+const float _cosh = cosh(.5);
+const float _exp = exp(.5);
+const float _expm1 = expm1(.5);
+const float _floor = floor(.5);
+const float _log = log(.5);
+const float _log2 = log2(.5);
+const float _log10 = log10(.5);
+const float _log1p = log1p(.5);
+const float _nextDown = nextDown(.5);
+const float _nextUp = nextUp(.5);
+const float _rint = rint(.5);
+const float _signum = signum(.5);
+const float _sin = sin(.5);
+const float _sinh = sinh(.5);
+const float _sqrt = sqrt(.5);
+const float _tan = tan(.5);
+const float _tanh = tanh(.5);
+const float _toDegrees = toDegrees(.5);
+const float _toRadians = toRadians(.5);
+const float _ulp = ulp(.5);
+
+const float _hypot = hypot(.5,.33);
+const float _logb = logb(.5,.33);
+const float _max = max(.5,.33);
+const float _min = min(.5,.33);
+const float _nextAfter = nextAfter(.5,.33);
+const float _pow = pow(.5,.33);
+
+const int _maxInt = maxInt(1,2);
+const int _minInt = minInt(1,2);
+
+const int _absInt = absInt(1);
+
+const float _fma = fma(.5,.33,.75);
+
+const float _scalb = scalb(.5,2);

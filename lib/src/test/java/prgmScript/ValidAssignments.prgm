@@ -1,0 +1,30 @@
+/* A simple test script which contains valid assignment expressions. */
+
+int x = 153;
+x *= 275;
+int y = 21;
+int z = 33;
+z %= 5;
+y /= z;
+x += y;
+x -= 13;
+if(x != 42069) throw "Oops: "+x;
+
+x = 39350;
+x ^= 15798;
+y = 39903;
+y &= 24693;
+x |= y;
+if(x != 42069) throw "Oops: "+x;
+
+x = 4442880;
+x >>= 6;
+if(x != 69420) throw "Oops: "+x;
+
+x = 4884998220813434880;
+x >>>= 46;
+if(x != 69420) throw "Oops: "+x;
+
+x = 17355;
+x <<= 2;
+if(x != 69420) throw "Oops: "+x;
