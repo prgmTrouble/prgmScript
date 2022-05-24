@@ -18,11 +18,12 @@ public final class XorShift implements RandomGenerator
         return l ^ (l >>> (byte)31);
     }
     private static final AtomicLong seed = new AtomicLong(stafford13(System.currentTimeMillis())^stafford13(System.nanoTime()));
+    public static long defaultSeed() {return seed.getAndAdd(0x9E3779B97F4A7C15L);}
     
     private long s0,s1;
     
     public XorShift(final long seed) {setSeed(seed);}
-    public XorShift() {setSeed(seed.getAndAdd(0x9E3779B97F4A7C15L));}
+    public XorShift() {this(defaultSeed());}
     
     public synchronized void setSeed(long seed)
     {

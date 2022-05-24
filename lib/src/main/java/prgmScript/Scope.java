@@ -37,6 +37,8 @@ abstract class Scope<V,E extends Entry<V>>
         final E e = entries.top();
         for(final Map.Entry<String,V> f : entry.fields.entrySet())
             e.fields.putIfAbsent(f.getKey(),f.getValue());
+        for(final Map.Entry<String,Map<String,ConstableType>> s : entry.structs.entrySet())
+            e.structs.putIfAbsent(s.getKey(),s.getValue());
     }
     /** @return The scope entry removed from the top of the stack. */
     E popScope() {return entries.pop();}

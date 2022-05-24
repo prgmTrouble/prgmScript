@@ -72,11 +72,11 @@ public final class prgmMath
         final FuncInitializer absIntInit = createFuncInitializer(absInt,Types.INT  ,Types.CONST_INT),
                               fmaInit    = createFuncInitializer(fma   ,Types.FLOAT,Types.CONST_FLOAT,Types.CONST_FLOAT,Types.CONST_FLOAT),
                               scalbInit  = createFuncInitializer(scalb ,Types.FLOAT,Types.CONST_FLOAT,Types.CONST_INT);
-        final String[] nd_d  = new String[] {"abs","acos","asin","atan","cbrt","ceil","cos","cosh","exp","expm1","floor","log","log2",
-                                             "log10","log1p","nextDown","nextUp","rint","signum","sin","sinh","sqrt","tan","tanh",
-                                             "toDegrees","toRadians","ulp"},
-                       nd_dd = new String[] {"hypot","logb","max","min","nextAfter","pow"},
-                       ni_ii = new String[] {"maxInt","minInt"};
+        final String[] nd_d  = {"abs","acos","asin","atan","cbrt","ceil","cos","cosh","exp","expm1","floor","log","log2",
+                                "log10","log1p","nextDown","nextUp","rint","signum","sin","sinh","sqrt","tan","tanh",
+                                "toDegrees","toRadians","ulp"},
+                       nd_dd = {"hypot","logb","max","min","nextAfter","pow"},
+                       ni_ii = {"maxInt","minInt"};
     
         final ModuleMaker mm = new ModuleMaker();
         for(int i = 0;i < d.length;++i)

@@ -609,7 +609,8 @@ public final class Script
     static Map<String,Value> listStruct(final Type subtype,final List<Value> list)
     {//TODO move copy and swap to library & add sublist
         final Type listType = Types.listType(subtype);
-        final ConstableType cst = Types.constableType(subtype,true),
+        final ConstableType est = Types.constableType(subtype,false),
+                            cst = Types.constableType(subtype,true),
                             clt = Types.constableType(listType,true),
                           retct = Types.constableType(Types.funcType(subtype),true),
                           putct = Types.constableType(Types.funcType(Type.VOID,cst),true);
@@ -672,7 +673,7 @@ public final class Script
                         @Override
                         Object exec(final RuntimeScope s)
                         {
-                            list.add(0,s.getField("\0"));
+                            list.add(0,new Value(est,s.getField("\0").value));
                             return null;
                         }
                     }
@@ -691,7 +692,7 @@ public final class Script
                         @Override
                         Object exec(final RuntimeScope s)
                         {
-                            list.add(s.getField("\0"));
+                            list.add(new Value(est,s.getField("\0").value));
                             return null;
                         }
                     }
@@ -732,7 +733,7 @@ public final class Script
                         @Override
                         Object exec(final RuntimeScope s)
                         {
-                            list.add(((Long)s.getField("\0").value).intValue(),s.getField("\1"));
+                            list.add(((Long)s.getField("\0").value).intValue(),new Value(est,s.getField("\1").value));
                             return null;
                         }
                     }
@@ -760,7 +761,7 @@ public final class Script
     }
     /** @return The data from the list struct. */
     @SuppressWarnings("unchecked")
-    static List<Value> listData(final Object list)
+    public static List<Value> listData(final Object list)
     {
         return (List<Value>)((Map<String,Value>)list).get(" ").value;
     }
@@ -809,7 +810,7 @@ public final class Script
     }
     /** @return The data from the string struct. */
     @SuppressWarnings("unchecked")
-    private static String strData(final Object o)
+    public static String strData(final Object o)
     {
         return (String)((Map<String,Value>)o).get(" ").value;
     }
@@ -898,7 +899,7 @@ public final class Script
             {
                 final Value[] val = new Value[ne];
                 for(int i = ne;i-- != 0;) val[i] = new Value(ct,resolve(s.popAccumulator()));
-                s.pushAccumulator(listStruct(type,new ArrayList<>(Arrays.asList(val))));
+                s.pushAccumulator(listStruct(subtype,new ArrayList<>(Arrays.asList(val))));
                 return null;
             }
         };

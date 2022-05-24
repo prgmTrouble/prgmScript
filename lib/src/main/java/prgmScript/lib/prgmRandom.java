@@ -49,12 +49,10 @@ public final class prgmRandom
                                                        nextBF = funcCreator(true,Types.FLOAT,Types.CONST_FLOAT,Types.CONST_FLOAT);
         final Function<Value[],Object> f = a ->
         {
-            final long seed = (long)a[0].getValue();
+            long seed = (long)a[0].getValue();
+            if(seed == 0L) seed = XorShift.defaultSeed();
             final boolean isStrong = (boolean)a[1].getValue();
-            final RandomGenerator rand =
-                seed == 0L
-                    ? (isStrong? new XorShift(    ) : new Random(    ))
-                    : (isStrong? new XorShift(seed) : new Random(seed));
+            final RandomGenerator rand = isStrong? new XorShift(seed) : new Random(seed);
             return Map.ofEntries
             (
                 Map.entry("seed",createInt(seed,true)),

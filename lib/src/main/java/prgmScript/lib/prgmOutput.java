@@ -1,9 +1,6 @@
 package prgmScript.lib;
 
-import prgmScript.ConstableType;
-import prgmScript.ModuleMaker;
-import prgmScript.Types;
-import prgmScript.Value;
+import prgmScript.*;
 
 import java.util.Map;
 import java.util.function.Function;
@@ -24,10 +21,10 @@ public final class prgmOutput
         @SuppressWarnings("unchecked")
         final Function<Value[],Object>[] f = new Function[]
         {
-            (Function<Value[],Object>)a -> {out.print  ((String)a[0].getValue()); return null;},
-            (Function<Value[],Object>)a -> {out.println((String)a[0].getValue()); return null;},
-            (Function<Value[],Object>)a -> {err.print  ((String)a[0].getValue()); return null;},
-            (Function<Value[],Object>)a -> {err.println((String)a[0].getValue()); return null;}
+            (Function<Value[],Object>)a -> {out.print  (Script.strData(a[0].getValue())); return null;},
+            (Function<Value[],Object>)a -> {out.println(Script.strData(a[0].getValue())); return null;},
+            (Function<Value[],Object>)a -> {err.print  (Script.strData(a[0].getValue())); return null;},
+            (Function<Value[],Object>)a -> {err.println(Script.strData(a[0].getValue())); return null;}
         };
         final FuncInitializer[] init = createFuncInitializers(f,Types.VOID,Types.CONST_STR);
         final ConstableType ft = Types.constableType(Types.funcType(Types.VOID,Types.CONST_STR),true);

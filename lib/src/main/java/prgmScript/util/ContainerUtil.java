@@ -1,5 +1,6 @@
 package prgmScript.util;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -35,5 +36,19 @@ public final class ContainerUtil
     {
         if(set == null) throw new NullPointerException();
         return Set.of((V[])set.toArray());
+    }
+    /**
+     * @return An immutable version of the specified list. The list's entries
+     *         are retained, so any changes to the original list's entries
+     *         may cause changes in the resulting list's entries, and vice
+     *         versa.
+     *
+     * @throws NullPointerException if the argument or any of its values are {@code null}.
+     */
+    @SuppressWarnings("unchecked")
+    public static <V> List<V> makeImmutable(final List<V> list)
+    {
+        if(list == null) throw new NullPointerException();
+        return List.of((V[])list.toArray());
     }
 }

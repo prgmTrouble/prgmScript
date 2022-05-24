@@ -1,0 +1,38 @@
+/* A test script which tests the functions from the library prgmRandom. */
+
+import "prgmRandom";
+import "prgmOutput";
+
+// Standard Random
+const int  [] i32_1 = [ int :],i64_1 = [ int :],bi64_1 = [ int :];
+const float[] f32_1 = [float:],f64_1 = [float:],bf64_1 = [float:],
+                g_1 = [float:],  e_1 = [float:];
+Random r = newRandom(1,false);
+for(int i = 0;i < 128;++i) i32_1.pushBack(r.nextI32());
+for(int i = 0;i < 128;++i) i64_1.pushBack(r.nextI64());
+for(int i = 0;i < 128;++i)bi64_1.pushBack(r.nextBoundedInt(1,10));
+for(int i = 0;i < 128;++i) f32_1.pushBack(r.nextF32());
+for(int i = 0;i < 128;++i) f64_1.pushBack(r.nextF64());
+for(int i = 0;i < 128;++i)bf64_1.pushBack(r.nextBoundedFloat(1.,10.));
+for(int i = 0;i < 128;++i)   g_1.pushBack(r.nextGaussian());
+for(int i = 0;i < 128;++i)   e_1.pushBack(r.nextExponential());
+r = newRandom(0,false);
+for(int i = 0;i < 16;++i) sysout.print(r.nextI32()+" ");
+sysout.println("");
+
+// Strong Random
+const int  [] i32_2 = [ int :],i64_2 = [ int :],bi64_2 = [ int :];
+const float[] f32_2 = [float:],f64_2 = [float:],bf64_2 = [float:],
+                g_2 = [float:],  e_2 = [float:];
+r = newRandom(1,true);
+for(int i = 0;i < 128;++i) i32_2.pushBack(r.nextI32());
+for(int i = 0;i < 128;++i) i64_2.pushBack(r.nextI64());
+for(int i = 0;i < 128;++i)bi64_2.pushBack(r.nextBoundedInt(1,10));
+for(int i = 0;i < 128;++i) f32_2.pushBack(r.nextF32());
+for(int i = 0;i < 128;++i) f64_2.pushBack(r.nextF64());
+for(int i = 0;i < 128;++i)bf64_2.pushBack(r.nextBoundedFloat(1.,10.));
+for(int i = 0;i < 128;++i)   g_2.pushBack(r.nextGaussian());
+for(int i = 0;i < 128;++i)   e_2.pushBack(r.nextExponential());
+r = newRandom(0,true);
+for(int i = 0;i < 16;++i) sysout.print(r.nextI32()+" ");
+sysout.println("");
